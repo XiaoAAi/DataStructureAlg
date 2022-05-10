@@ -2,10 +2,10 @@ main:main.o SeqList.o
 	gcc main.o SeqList.o -o main
 	./main
 
-main.o:main.c includes.h SeqList.h
+main.o:main.c
 	gcc -c main.c -o main.o 
 
-SeqList.o:SeqList.c SeqList.h includes.h
+SeqList.o:SeqList.c
 	gcc -c SeqList.c -o SeqList.o
 
 

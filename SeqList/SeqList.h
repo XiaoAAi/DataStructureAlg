@@ -1,6 +1,6 @@
 #ifndef  _SEQLIST_H_
 #define  _SEQLIST_H_
-#include "includes.h"
+#include "../includes.h"
 
 typedef void  SeqList;
 typedef void  SeqListNode;

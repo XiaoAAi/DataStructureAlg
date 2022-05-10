@@ -3,7 +3,7 @@
  * 2.Insert函数中 加入到list->node[pos]中的是数值，不是地址;原因是：申请空间的时候，使用的是sizeof(TSeqListNode) * capacity  而不是 sizeof(TSeqListNode*) * capacity; 又因为unsigned int 是 4Byte正好和地址字节一样，所以没有出错！
  * 3.也可以使用地址进行顺序现行表，但是需要有固定内存！
 */
-#include "includes.h"
+#include "../includes.h"
 #include "SeqList.h"
 
 #define MAX   10
