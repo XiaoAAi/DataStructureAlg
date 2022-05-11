@@ -85,7 +85,51 @@ int LinkList_Insert(LinkList* list, LinkListNode* node, int pos)
 }  
 
 
+//获取某一位元素
+LinkListNode* LinkList_Get(LinkList* list, int pos)
+{
+    TLinkList* slist = (TLinkList*) list;
+    LinkListNode* ret = NULL;
+    int cnt = pos;
 
-LinkListNode* LinkList_Get(LinkList* list, int pos);    //获取某一位元素
-LinkListNode* LinkList_Delete(LinkList* list, int pos);     //删除某一位元素
+    if(slist!= NULL && pos>=0 && pos<slist->length)
+    {
+        LinkListNode* slider = (LinkListNode*)slist;
+
+        while(cnt--)
+        {
+            slider = slider->next;
+        }
+
+        ret = slider->next;
+    }
+
+    return ret;
+}
+
+
+//删除某一位元素
+LinkListNode* LinkList_Delete(LinkList* list, int pos)
+{
+    TLinkList* slist = (TLinkList*) list;
+    LinkListNode* ret = NULL;
+    int cnt = pos;
+
+    if(slist!= NULL && pos>=0 && pos<slist->length)
+    {
+        LinkListNode* slider = (LinkListNode*)slist;
+
+        while(cnt--)
+        {
+            slider = slider->next;
+        }
+
+        ret = slider->next;
+        slider->next = ret->next;   
+
+        slist->length -= 1; 
+    }    
+    
+    return ret;
+}   
 
