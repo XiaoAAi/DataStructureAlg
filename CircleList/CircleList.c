@@ -57,11 +57,109 @@ int CircleList_Length(CircleList* list)
 }
 
 
-int CircleList_Insert(CircleList* list, CircleListNode* node, int pos);
+int CircleList_Insert(CircleList* list, CircleListNode* node, int pos)
+{
+    TCircleList* slist = (TCircleList*)list;
+    int ret = (slist != NULL) && (pos >= 0) && (pos <= slist->length) && (node != NULL);
+    int i = 0;
 
-CircleListNode* CircleList_Get(CircleList* list, int pos);
+    if(ret)
+    {
+        CircleListNode* current = (CircleListNode*)list;
+        CircleListNode* plast = (CircleListNode*)list;
 
-CircleListNode* CircleList_Delete(CircleList* list, int pos);
+        for(i=0; i<pos && current->next!=NULL; i++)
+        {
+            current = current->next;
+        }
+        node->next = current->next;
+        current->next = node;
+
+        if(slist->length == 0)
+        {
+            slist->slider = node;
+            node->next = node;
+        }
+        else
+        {
+            for(i=0; i<(CircleList_Length(slist)+1); i++)
+            {
+                plast = plast->next;
+            }
+            plast->next = slist->header.next;
+        }
+
+        slist->length += 1;
+    }
+
+    return ret;
+}
+
+
+CircleListNode* CircleList_Get(CircleList* list, int pos)
+{
+    TCircleList* slist = (TCircleList*)list;
+    static CircleListNode* ret = NULL;
+    int i = 0;
+
+    if(slist!=NULL && pos>=0)
+    {
+        CircleListNode* current = (CircleListNode*)list;
+
+        for(i=0; i<pos; i++)
+        {
+            current = current->next;
+        }
+
+        ret = current->next;
+    }
+
+    return ret;
+}
+
+
+CircleListNode* CircleList_Delete(CircleList* list, int pos)
+{
+    TCircleList* slist = (TCircleList*)list;
+    static CircleListNode* ret = NULL;
+    int i=0;
+
+    if(list!=NULL && pos>=0)
+    {
+        CircleListNode* current = (CircleListNode*)list;
+        CircleListNode* pfirst = slist->header.next;
+        CircleListNode* plast = (CircleListNode*)CircleList_Get(slist, (slist->length-1));
+
+        for(i=0; i<pos; i++)
+        {
+            current = current->next;
+        }
+
+        ret = current->next;
+        current->next = ret->next;
+
+        slist->length -= 1;
+
+        if(pfirst == ret)
+        {
+            slist->header.next = ret->next;
+            plast->next = ret->next;
+        }
+
+        if(slist->slider == ret)
+        {
+            slist->slider = ret->next;
+        }
+
+        if(slist->length == 0)
+        {
+            slist->header.next = NULL;
+            slist->slider = NULL;
+        }
+    }
+
+    return ret;
+}
 
 CircleListNode* CircleList_DeleteNode(CircleList* list, CircleListNode* node);
 //设置 游标位于头指针
