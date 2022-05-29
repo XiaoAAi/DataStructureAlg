@@ -161,11 +161,80 @@ CircleListNode* CircleList_Delete(CircleList* list, int pos)
     return ret;
 }
 
-CircleListNode* CircleList_DeleteNode(CircleList* list, CircleListNode* node);
+CircleListNode* CircleList_DeleteNode(CircleList* list, CircleListNode* node)
+{
+    TCircleList* slist = (TCircleList*)list;
+    static CircleListNode* ret = NULL;
+    int i = 0;
+
+    if(slist != NULL)
+    {
+        CircleListNode* current = (CircleListNode*)list;
+
+        for(i=0; i<slist->length; i++)
+        {
+            if(current->next == node)
+            {
+                ret = current->next;
+                break;
+            }
+
+            current = current->next;
+        }
+
+        if(ret != NULL)
+        {
+            CircleList_Delete(slist, i);
+        }
+    }
+
+    return ret;
+}
+
+
 //设置 游标位于头指针
-CircleListNode* CircleList_Reset(CircleList* list);
+CircleListNode* CircleList_Reset(CircleList* list)
+{
+    TCircleList* slist = (TCircleList*)list;    
+    static CircleListNode* ret = NULL;
+
+    if(slist != NULL)
+    {
+        slist->slider = slist->header.next;
+        ret = slist->slider;
+    }
+
+    return ret;
+}
+
+
 // 返回当前 游标
-CircleListNode* CircleList_Current(CircleList* list);
+CircleListNode* CircleList_Current(CircleList* list)
+{
+    TCircleList* slist = (TCircleList*)list;
+    static CircleListNode* ret = NULL;
+
+    if(slist != NULL)
+    {
+        ret = slist->slider;
+    }
+
+    return ret;
+}
+
+
 //返回下一个游标
-CircleListNode* CircleList_Next(CircleList* list);
+CircleListNode* CircleList_Next(CircleList* list)
+{
+    TCircleList* slist = (TCircleList*)list;
+    static CircleListNode* ret = NULL;
+
+    if(slist!=NULL && slist->slider!=NULL)
+    {
+        ret = slist->slider;
+        slist->slider = ret->next;
+    }
+
+    return ret;
+}
 

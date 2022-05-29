@@ -45,5 +45,23 @@ int main(void)
     nlen = CircleList_Length(list);
     printf("len2:%d\n", nlen); 
 
+    reVal = (CicleListVal*)CircleList_DeleteNode(list, (CircleListNode*)&c);
+    printf("deleteNodeVal:%d\n", reVal->val);
+
+    nlen = CircleList_Length(list);
+    printf("len2:%d\n", nlen); 
+
+    CircleList_Reset(list);
+    while(nlen--)
+    {
+        reVal = (CicleListVal*)CircleList_Current(list);
+        printf("%d\t", reVal->val);
+        CircleList_Next(list);
+    }
+    printf("\n");
+
+    reVal = (CicleListVal*)CircleList_Reset(list);
+    printf("reVal:%d\n", reVal->val);
+
     CircleList_Destory(list);
 }
