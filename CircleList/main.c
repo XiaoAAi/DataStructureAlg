@@ -39,11 +39,24 @@ int main(void)
     }
     printf("\n");
 
-    reVal = (CicleListVal*)CircleList_Delete(list, 2*nlen+1);
+    // reVal = (CicleListVal*)CircleList_Delete(list, 2*nlen+1);
+    // printf("deleteVal:%d\n", reVal->val);
+
+    reVal = (CicleListVal*)CircleList_Delete(list, nlen-1);
+    printf("deleteVal:%d\n", reVal->val);
+
+    reVal = (CicleListVal*)CircleList_Delete(list, 0);
     printf("deleteVal:%d\n", reVal->val);
 
     nlen = CircleList_Length(list);
     printf("len2:%d\n", nlen); 
+
+    for(index=0; index<2*nlen+1; index++)
+    {
+        reVal = (CicleListVal*)CircleList_Get(list, index);
+        printf("%d\t", reVal->val);
+    }
+    printf("\n");
 
     reVal = (CicleListVal*)CircleList_DeleteNode(list, (CircleListNode*)&c);
     printf("deleteNodeVal:%d\n", reVal->val);

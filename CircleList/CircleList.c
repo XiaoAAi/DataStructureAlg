@@ -66,7 +66,7 @@ int CircleList_Insert(CircleList* list, CircleListNode* node, int pos)
     if(ret)
     {
         CircleListNode* current = (CircleListNode*)list;
-        CircleListNode* plast = (CircleListNode*)list;
+        CircleListNode* plast = NULL;
 
         for(i=0; i<pos && current->next!=NULL; i++)
         {
@@ -80,16 +80,14 @@ int CircleList_Insert(CircleList* list, CircleListNode* node, int pos)
             slist->slider = node;
             node->next = node;
         }
-        else
-        {
-            for(i=0; i<(CircleList_Length(slist)+1); i++)
-            {
-                plast = plast->next;
-            }
-            plast->next = slist->header.next;
-        }
 
         slist->length += 1;
+
+        if(current == (CircleListNode*)list)
+        {
+            plast = (CircleListNode*)CircleList_Get(slist, (slist->length-1));
+            plast->next = current->next;
+        }
     }
 
     return ret;
@@ -128,7 +126,7 @@ CircleListNode* CircleList_Delete(CircleList* list, int pos)
     {
         CircleListNode* current = (CircleListNode*)list;
         CircleListNode* pfirst = slist->header.next;
-        CircleListNode* plast = (CircleListNode*)CircleList_Get(slist, (slist->length-1));
+        CircleListNode* plast = NULL;
 
         for(i=0; i<pos; i++)
         {
@@ -140,8 +138,9 @@ CircleListNode* CircleList_Delete(CircleList* list, int pos)
 
         slist->length -= 1;
 
-        if(pfirst == ret)
+        if(current == (CircleListNode*)list)
         {
+            plast = (CircleListNode*)CircleList_Get(slist, (slist->length-1));
             slist->header.next = ret->next;
             plast->next = ret->next;
         }

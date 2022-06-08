@@ -93,8 +93,12 @@ int DLinkList_Insert(DLinkList* list, DLinkListNode* node, int pos)
 
         if(slist->length == 0)
         {
-            node->pre = NULL;
             slist->slider = node;
+        }
+
+        if(current == (DLinkListNode*) list)
+        {
+            node->pre = NULL;
         }
 
         slist->length += 1;
